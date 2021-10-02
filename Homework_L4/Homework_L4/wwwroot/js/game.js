@@ -45,39 +45,77 @@ var hubConnection = new signalR.HubConnectionBuilder()
         });
 
 
-hubConnection.on('AddPlayer', function (nickname) {
+            hubConnection.on('AddPlayer', function (nickname) {
+            
+                console.log('From AddPlayer:' + nickname)
+                document.getElementById("response").innerText = nickname;
+            
+            
+            });
+            
+            document.getElementById("sendBtn").addEventListener("click", function (e) {
+            
+                let name = document.getElementById("name").value;
+            
+                hubConnection.invoke("AddPlayer", name);
+            
+                document.getElementById("name").value = "";
+            
+                document.getElementById("header").innerHTML = '<h3>Welcome ' + name + '</h3>';
+            
+            });
+            
+            hubConnection.on('OpenField', function (isGame) {
+            
+                document.getElementById("response").innerText = '';
+            
+                if (isGame) {
+                    console.log('game start!!!!');
+                    document.getElementById('info1').innerText = " ";
+                    $('#field').show();
+                }
+                else {
+                    console.log('no game start!!!!');
+            
+                }
+            });
+            
 
-    console.log('From AddPlayer:' + nickname)
-    document.getElementById("response").innerText = nickname;
+hubConnection.on('EnableField', function (flag, nickname, msg) {
 
+    console.log('Enable field');
+    console.log(`flag: ${flag}`);
 
+    document.getElementById('info2').innerText = msg;
+
+    const divs = document.querySelectorAll('.cell');
+    divs.forEach(function (item) {
+        item.style.pointerEvents = 'auto';
+    });
+
+    activeNickname = nickname;
+
+    console.log('-> -> ->');
 });
 
-document.getElementById("sendBtn").addEventListener("click", function (e) {
+hubConnection.on('DisableField', function (flag, msg) {
 
-    let name = document.getElementById("name").value;
+    console.log(msg);
+    console.log(`flag: ${flag}`);
 
-    hubConnection.invoke("AddPlayer", name);
+    console.log('Disable Field');
+    document.getElementById('info2').innerText = msg;
 
-    document.getElementById("name").value = "";
 
-    document.getElementById("header").innerHTML = '<h3>Welcome ' + name + '</h3>';
 
-});
+    const divs = document.querySelectorAll('.cell');
+    divs.forEach(function (item) {
+        item.style.pointerEvents = 'none';
+    });
 
-hubConnection.on('OpenField', function (isGame) {
+    console.log('-> -> ->');
 
-    document.getElementById("response").innerText = '';
 
-    if (isGame) {
-        console.log('game start!!!!');
-        document.getElementById('info1').innerText = " ";
-        $('#field').show();
-    }
-    else {
-        console.log('no game start!!!!');
-
-    }
 });
 
 

@@ -16,7 +16,7 @@ namespace Homework_L4.Hubs
         //public static List<string> _nickName = new List<string>();
         public override async Task OnConnectedAsync()
         {
-           _game.ConnectedIds.Add(Context.ConnectionId);
+            _game.ConnectedIds.Add(Context.ConnectionId);
             await this.Clients.All.SendAsync("Notify", $"{this.Context.ConnectionId}  : entered the chat");
             await Clients.All.SendAsync("ConNum", $"{_game.ConnectedIds.Count}");
             await Clients.All.SendAsync("AuthNum", $"{_game.nickNames.Count}");
@@ -38,7 +38,7 @@ namespace Homework_L4.Hubs
 
         public async Task AddPlayer(string nickname)
         {
-      
+
 
             if (_game.sessionNickNames.Count == 0)
             {
@@ -66,7 +66,7 @@ namespace Homework_L4.Hubs
 
             await Clients.Caller.SendAsync("HideLoginMenu", "Hide OK");
 
-            if (_game.nickNames.Count%2!=0)
+            if (_game.nickNames.Count % 2 != 0)
             {
                 await Clients.Caller.SendAsync("Info", "Waiting for the second player...");
             }
@@ -78,14 +78,18 @@ namespace Homework_L4.Hubs
 
             await OpenField();
 
-            //await StartTHeGame(isFirstPlayerMove);
+            await StartTHeGame(_game.isFirstPlayerMove);
 
 
         }
 
         public async Task OpenField()
         {
-            if(_game.sessionsList.Count>=1)
+            //TODO
+            //the field is open only for two players of one session 
+
+
+            if (_game.sessionsList.Count >= 1)
             {
                 _game.startGameSession = true;
                 List<string> SessionPlayerIds = new List<string>();
@@ -97,5 +101,32 @@ namespace Homework_L4.Hubs
 
 
         }
+
+        public async Task StartTHeGame(bool isFirstPlayerMove)
+        {
+            
+            if (_game.sessionsList.Count>=1)
+            {
+
+
+                if (!isFirstPlayerMove)
+                {
+                    //GameStatus
+                    await Clients.Client(_game.sessionsList[_game.sessionsList.Count - 1].Player1.Id).SendAsync("EnableField", _game.isEnableField, _game.sessionsList[_game.sessionsList.Count - 1].Player1.NickName, "Yor move...");
+                    await Clients.Client(_game.sessionsList[_game.sessionsList.Count - 1].Player2.Id).SendAsync("DisableField", _game.isDisableField, "Wait for the first player to make a move...");
+
+                }
+                else
+                {
+                    await Clients.Client(_game.sessionsList[_game.sessionsList.Count - 1].Player2.Id).SendAsync("EnableField", _game.isEnableField, _game.sessionsList[_game.sessionsList.Count - 1].Player2.NickName, "You move...");
+                    await Clients.Client(_game.sessionsList[_game.sessionsList.Count - 1].Player1.Id).SendAsync("DisableField", _game.isDisableField, "Wait for the second player to make a move...");
+
+                }
+
+            }
+
+        }
+
     }
+
 }
