@@ -127,6 +127,48 @@ namespace Homework_L4.Hubs
 
         }
 
+        public async Task PutSymbolToCell(bool isFirstPlayerMove, string id)
+        {
+            List<string> SessionPlayerIds = new List<string>();
+            SessionPlayerIds.Add(_game.sessionsList[_game.sessionsList.Count - 1].Player1.Id);
+            SessionPlayerIds.Add(_game.sessionsList[_game.sessionsList.Count - 1].Player2.Id);
+
+            if (!isFirstPlayerMove)
+            {
+                await Clients.Clients(SessionPlayerIds).SendAsync("PutSymbol", _game.player1Symbol, id);
+            }
+            else
+            {
+                await Clients.Clients(SessionPlayerIds).SendAsync("PutSymbol", _game.player2Symbol, id);
+            }
+
+        }
+
+        public async Task GameStatus(string status, int count)
+        {
+            List<string> SessionPlayerIds = new List<string>();
+            SessionPlayerIds.Add(_game.sessionsList[_game.sessionsList.Count - 1].Player1.Id);
+            SessionPlayerIds.Add(_game.sessionsList[_game.sessionsList.Count - 1].Player2.Id);
+
+            if (status == "deadheat")
+            {
+                await Clients.All.SendAsync("DeadHeat", "DeadHeat...)))");
+            }
+            if (status == "win")
+            {
+                if (count % 2 != 0)
+                {
+                    await Clients.Clients(SessionPlayerIds).SendAsync("Win", $"Player {_game.sessionsList[_game.sessionsList.Count - 1].Player1.NickName} won!!!");
+                }
+                else
+                {
+                    await Clients.Clients(SessionPlayerIds).SendAsync("Win", $"Player {_game.sessionsList[_game.sessionsList.Count - 1].Player2.NickName} won!!!");
+                }
+
+            }
+
+        }
+
     }
 
 }
