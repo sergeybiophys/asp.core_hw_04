@@ -11,6 +11,10 @@ namespace Homework_L4.Models
 
         public string NickName { get; set; }
 
+        public PlayerModel()
+        {
+
+        }
         public PlayerModel(string id, string nickname)
         {
             this.Id = id;

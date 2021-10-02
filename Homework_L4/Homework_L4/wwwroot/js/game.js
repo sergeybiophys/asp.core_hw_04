@@ -30,6 +30,55 @@ var hubConnection = new signalR.HubConnectionBuilder()
         
         });
 
+        hubConnection.on('HideLoginMenu', function (msg) {
+        
+            console.log(msg);
+            $('#inputForm').hide();
+        
+        });
+        
+        hubConnection.on('Info', function (msg) {
+        
+            console.log(msg);
+            document.getElementById("info1").innerText = msg;
+        
+        });
+
+
+hubConnection.on('AddPlayer', function (nickname) {
+
+    console.log('From AddPlayer:' + nickname)
+    document.getElementById("response").innerText = nickname;
+
+
+});
+
+document.getElementById("sendBtn").addEventListener("click", function (e) {
+
+    let name = document.getElementById("name").value;
+
+    hubConnection.invoke("AddPlayer", name);
+
+    document.getElementById("name").value = "";
+
+    document.getElementById("header").innerHTML = '<h3>Welcome ' + name + '</h3>';
+
+});
+
+hubConnection.on('OpenField', function (isGame) {
+
+    document.getElementById("response").innerText = '';
+
+    if (isGame) {
+        console.log('game start!!!!');
+        document.getElementById('info1').innerText = " ";
+        $('#field').show();
+    }
+    else {
+        console.log('no game start!!!!');
+
+    }
+});
 
 
 
