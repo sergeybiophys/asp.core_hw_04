@@ -2,12 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Hubs.Homework_L4
+namespace Homework_L4.Hubs
 {
-    public class GameHub: Hub
+    public class GameHub : Hub
     {
     }
 }
