@@ -4,4 +4,8 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Hubs.Homework_L4\Hubs.Homework_L4.csproj" />
+  </ItemGroup>
+
 </Project>

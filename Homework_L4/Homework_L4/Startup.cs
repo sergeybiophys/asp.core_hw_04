@@ -46,7 +46,7 @@ namespace Homework_L4
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<GameHub>
+                endpoints.MapHub<GameHub>("/gamehub");
 
                 endpoints.MapControllerRoute(
                     name: "default",

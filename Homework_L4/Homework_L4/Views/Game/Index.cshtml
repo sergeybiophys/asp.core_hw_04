@@ -1,0 +1,73 @@
+﻿
+<div style="display: flex; flex-direction: row;">
+    <div class="container2" style="width: 80%; background-color: moccasin; justify-content: center;">
+
+        <div id="header"></div><br />
+
+        <div id="inputForm" style="justify-content: center;  margin: 0 auto;">
+            <div>
+                <label style=" background-color:slategrey">Enter NickName</label><br />
+            </div>
+            <div>
+                <input style="width: 185px;" type="text" id="name" /><br /><br />
+            </div>
+            <div>
+                <input style="width: 185px;" type="button" id="sendBtn" value="Create" />
+            </div>
+
+        </div>
+
+        <div><p id="response"></p></div>
+        <div><p id="hideblock"></p></div>
+        <div><p id="info1"></p></div>
+        <div><p id="info2"></p></div>
+        <div><p id="gamestatus"></p></div>
+
+        <hr />
+
+
+
+        <div class="wrapper" style="display: none;" id="field">
+
+
+            <div class="cell" id="1"></div>
+            <div class="cell" id="2"></div>
+            <div class="cell" id="3"></div>
+
+
+
+            <div class="cell" id="4"></div>
+            <div class="cell" id="5"></div>
+            <div class="cell" id="6"></div>
+
+
+            <div class="cell" id="7"></div>
+            <div class="cell" id="8"></div>
+            <div class="cell" id="9"></div>
+
+
+        </div>
+
+        @*<div><p id="gamestatus"></p></div>*@
+
+    </div>
+    <div style="width: 20%; background-color: aquamarine; text-align: center;">
+        <hr />
+        <p>Connection status</p>
+        <hr />
+        <div id="chatroom"></div>
+        <div id="chatroom2"></div>
+
+        <hr />
+    </div>
+</div>
+
+
+
+
+
+
+<script src="~/js/microsoft/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/game.js"></script>
+
+<script src="~/js/microsoft/signalr/dist/browser/signalr.min.js"></script>
