@@ -11,12 +11,13 @@ var hubConnection = new signalR.HubConnectionBuilder()
 /*---------------------------------------------------------------*/
         hubConnection.on('Notify', function (message) {
         
-            let notifyElem = document.createElement("small");
+            let notifyElem = document.createElement('small');
+            notifyElem.style.color = 'white';
             notifyElem.appendChild(document.createTextNode(message));
-            let elem = document.createElement("p");
+            let elem = document.createElement('p');
             elem.appendChild(notifyElem);
-            var firstElem = document.getElementById("chatroom").firstChild;
-            document.getElementById("chatroom").insertBefore(elem, firstElem);
+            var firstElem = document.getElementById('chatroom').firstChild;
+            document.getElementById('chatroom').insertBefore(elem, firstElem);
         });
 
         hubConnection.on('ConNum', function (message) {
@@ -73,12 +74,12 @@ var hubConnection = new signalR.HubConnectionBuilder()
                 document.getElementById("response").innerText = '';
             
                 if (isGame) {
-                    console.log('game start!!!!');
+                    console.log('the game has begun!!!!');
                     document.getElementById('info1').innerText = " ";
                     $('#field').show();
                 }
                 else {
-                    console.log('no game start!!!!');
+                    console.log('the game did not start !!!!');
             
                 }
             });
@@ -138,6 +139,7 @@ hubConnection.on('Win', function (msg) {
         item.style.pointerEvents = 'none';
     });
     document.getElementById('info2').innerText = '';
+    document.getElementById('gamestatus').style.color = 'orange';
     document.getElementById('gamestatus').innerText = msg;
 });
 
